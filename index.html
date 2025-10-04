@@ -77,7 +77,7 @@
     100% { opacity: 1; transform: translateY(0) rotate(0deg); }
   }
 
-  /* Wand with sparkling trail */
+  /* Wand and sparkles */
   .wand {
     width: 10px;
     height: 10px;
@@ -206,52 +206,63 @@
 </section>
 
 <script>
-  const letters = document.querySelectorAll('#fest-name span');
-  const wand = document.getElementById('wand');
+const letters = document.querySelectorAll('#fest-name span');
+const wand = document.getElementById('wand');
 
-  // Disney-style wand animation with sparkles
-  let i = 0;
-  function animateWand() {
-    if(i < letters.length){
-      const rect = letters[i].getBoundingClientRect();
-      wand.style.left = (rect.left + rect.width/2 + window.scrollX) + 'px';
-      wand.style.top = (rect.top + rect.height/2 + window.scrollY) + 'px';
-      wand.style.opacity = 1;
+// Disney-style wand animation with sparkles
+let i = 0;
+function animateWand() {
+  if(i < letters.length){
+    const rect = letters[i].getBoundingClientRect();
+    wand.style.left = (rect.left + rect.width/2 + window.scrollX) + 'px';
+    wand.style.top = (rect.top + rect.height/2 + window.scrollY) + 'px';
+    wand.style.opacity = 1;
 
-      // create sparkle
-      const sparkle = document.createElement('div');
-      sparkle.className = 'sparkle';
-      sparkle.style.left = wand.style.left;
-      sparkle.style.top = wand.style.top;
-      document.body.appendChild(sparkle);
-      setTimeout(() => document.body.removeChild(sparkle), 600);
+    // create sparkle
+    const sparkle = document.createElement('div');
+    sparkle.className = 'sparkle';
+    sparkle.style.left = wand.style.left;
+    sparkle.style.top = wand.style.top;
+    document.body.appendChild(sparkle);
+    setTimeout(() => document.body.removeChild(sparkle), 600);
 
-      setTimeout(() => { wand.style.opacity = 0; }, 300);
-      i++;
-      setTimeout(animateWand, 100);
-    } else {
-      // Ensure letters stay static
-      letters.forEach(letter => {
-        letter.style.opacity = 1;
-        letter.style.transform = 'translateY(0) rotate(0deg)';
-      });
-      // start RGB clockwise glow
-      document.getElementById('fest-name').classList.add('glow');
-    }
+    setTimeout(() => { wand.style.opacity = 0; }, 300);
+    i++;
+    setTimeout(animateWand, 100);
+  } else {
+    // Ensure letters stay static
+    letters.forEach(letter => {
+      letter.style.opacity = 1;
+      letter.style.transform = 'translateY(0) rotate(0deg)';
+    });
+    // start RGB clockwise glow
+    document.getElementById('fest-name').classList.add('glow');
   }
+}
 
-  window.onload = animateWand;
+window.onload = animateWand;
 
-  // Cursor magic dust effect
-  document.addEventListener('mousemove', e => {
-    const dust = document.createElement('div');
-    dust.className = 'sparkle';
-    dust.style.left = e.pageX + 'px';
-    dust.style.top = e.pageY + 'px';
-    document.body.appendChild(dust);
-    setTimeout(() => document.body.removeChild(dust), 600);
-  });
+// Cursor magic dust effect for desktop and mobile
+function createDust(x, y) {
+  const dust = document.createElement('div');
+  dust.className = 'sparkle';
+  dust.style.left = x + 'px';
+  dust.style.top = y + 'px';
+  document.body.appendChild(dust);
+  setTimeout(() => document.body.removeChild(dust), 600);
+}
+
+// Mouse support
+document.addEventListener('mousemove', e => { createDust(e.pageX, e.pageY); });
+
+// Touch support for mobile
+document.addEventListener('touchmove', e => {
+  for (let touch of e.touches) {
+    createDust(touch.pageX, touch.pageY);
+  }
+}, { passive: true });
 </script>
 
 </body>
 </html>
+
