@@ -3,7 +3,7 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Gregoria 2.0 - Disney Magic</title>
+<title>Gregoria 2.0</title>
 <style>
   body {
     font-family: 'Orbitron', sans-serif;
@@ -25,7 +25,6 @@
     border-radius: 15px;
     background: rgba(0,0,0,0.55);
     backdrop-filter: blur(6px);
-    position: relative;
   }
 
   header h1 {
@@ -54,7 +53,6 @@
     margin: 0 2px;
     color: #fff;
     text-shadow: 0 0 5px #fff, 0 0 10px #ff00d4, 0 0 15px #00ffe7;
-    position: relative;
   }
 
   /* Letter delays */
@@ -77,46 +75,17 @@
     100% { opacity: 1; transform: translateY(0) rotate(0deg); }
   }
 
-  /* Wand and sparkles */
-  .wand {
-    width: 10px;
-    height: 10px;
-    background: #fff;
-    border-radius: 50%;
-    position: absolute;
-    pointer-events: none;
-    opacity: 0;
-    box-shadow: 0 0 20px #fff, 0 0 40px #ff00d4, 0 0 60px #00ffe7;
-  }
-
-  .sparkle {
-    width: 6px;
-    height: 6px;
-    background: #fff;
-    position: absolute;
-    border-radius: 50%;
-    pointer-events: none;
-    box-shadow: 0 0 10px #fff, 0 0 15px #ff00d4, 0 0 20px #00ffe7;
-    opacity: 0;
-    animation: sparkleFade 0.6s forwards;
-  }
-
-  @keyframes sparkleFade {
-    0% { opacity: 1; transform: scale(1); }
-    100% { opacity: 0; transform: scale(0.1); }
-  }
-
-  /* RGB clockwise glow after animation */
+  /* RGB flashy glow after animation */
   header h2.glow span {
-    animation: rgbClockwise 3s linear infinite;
+    animation: rgbFlash 1.5s linear infinite;
   }
 
-  @keyframes rgbClockwise {
-    0% { text-shadow: 0 0 10px red, 0 0 20px green, 0 0 30px blue; }
-    25% { text-shadow: 0 0 10px green, 0 0 20px blue, 0 0 30px red; }
-    50% { text-shadow: 0 0 10px blue, 0 0 20px red, 0 0 30px green; }
-    75% { text-shadow: 0 0 10px red, 0 0 20px green, 0 0 30px blue; }
-    100% { text-shadow: 0 0 10px green, 0 0 20px blue, 0 0 30px red; }
+  @keyframes rgbFlash {
+    0%   { text-shadow: 0 0 15px red,     0 0 30px blue,   0 0 45px green; }
+    25%  { text-shadow: 0 0 15px green,   0 0 30px red,    0 0 45px blue; }
+    50%  { text-shadow: 0 0 15px blue,    0 0 30px green,  0 0 45px red; }
+    75%  { text-shadow: 0 0 15px magenta, 0 0 30px cyan,   0 0 45px yellow; }
+    100% { text-shadow: 0 0 15px red,     0 0 30px blue,   0 0 45px green; }
   }
 
   /* Video grid */
@@ -164,6 +133,55 @@
     text-shadow: 0 0 10px #00eaff, 0 0 20px #ff00d4;
   }
 
+  /* Sparkle dust */
+  .sparkle {
+    position: absolute;
+    width: 6px;
+    height: 6px;
+    border-radius: 50%;
+    pointer-events: none;
+    opacity: 0.9;
+    animation: sparkleFade 0.6s forwards;
+  }
+
+  @keyframes sparkleFade {
+    from { transform: scale(1); opacity: 1; }
+    to   { transform: scale(3); opacity: 0; }
+  }
+
+  /* Footer */
+  footer {
+    text-align: center;
+    padding: 15px 30px;
+    margin-top: 40px;
+    border-radius: 12px;
+    font-size: 0.9rem;
+    color: #fff;
+    background: rgba(0,0,0,0.55);
+    position: relative;
+    text-shadow: 0 0 10px #00ffe7, 0 0 20px #ff00d4;
+    overflow: hidden;
+  }
+
+  footer::before {
+    content: '';
+    position: absolute;
+    top: -5px;
+    left: -5px;
+    width: calc(100% + 10px);
+    height: calc(100% + 10px);
+    border: 2px solid;
+    border-image: linear-gradient(90deg, red, orange, yellow, green, cyan, blue, magenta, red) 1;
+    border-radius: 12px;
+    animation: borderGlow 4s linear infinite;
+    pointer-events: none;
+  }
+
+  @keyframes borderGlow {
+    0%   { transform: rotate(0deg); }
+    100% { transform: rotate(360deg); }
+  }
+
   @media (max-width: 600px) {
     header h1 { font-size: 1.6rem; }
     header h2 { font-size: 2.5rem; }
@@ -179,91 +197,66 @@
     <span> </span>
     <span>2</span><span>.</span><span>0</span>
   </h2>
-  <div class="wand" id="wand"></div>
 </header>
 
 <section class="video-grid">
   <div class="video-card">
     <iframe src="https://www.youtube.com/embed/7T-CkA5fv9c"></iframe>
-    <div class="video-title" onclick="window.open('https://youtube.com/shorts/7T-CkA5fv9c?si=nRlJ1HXuPibCKU6z','_blank')">SCENE 1</div>
+    <div class="video-title" onclick="window.open('https://youtube.com/shorts/7T-CkA5fv9c','_blank')">SCENE 1</div>
   </div>
   <div class="video-card">
     <iframe src="https://www.youtube.com/embed/6ZHeZyvfap4"></iframe>
-    <div class="video-title" onclick="window.open('https://youtube.com/shorts/6ZHeZyvfap4?si=mQBH8s_OosMzFUaD','_blank')">SCENE 2</div>
+    <div class="video-title" onclick="window.open('https://youtube.com/shorts/6ZHeZyvfap4','_blank')">SCENE 2</div>
   </div>
   <div class="video-card">
     <iframe src="https://www.youtube.com/embed/3oqF5BvITr4"></iframe>
-    <div class="video-title" onclick="window.open('https://youtube.com/shorts/3oqF5BvITr4?si=LeWB2crRE3eZ9eip','_blank')">SCENE 3</div>
+    <div class="video-title" onclick="window.open('https://youtube.com/shorts/3oqF5BvITr4','_blank')">SCENE 3</div>
   </div>
   <div class="video-card">
     <iframe src="https://www.youtube.com/embed/pv0q851qDpc"></iframe>
-    <div class="video-title" onclick="window.open('https://youtube.com/shorts/pv0q851qDpc?si=3jPvH5MVTNPEFtKF','_blank')">SCENE 4</div>
+    <div class="video-title" onclick="window.open('https://youtube.com/shorts/pv0q851qDpc','_blank')">SCENE 4</div>
   </div>
   <div class="video-card">
     <iframe src="https://www.youtube.com/embed/TIuVjJxatx4"></iframe>
-    <div class="video-title" onclick="window.open('https://youtube.com/shorts/TIuVjJxatx4?si=vPYounLDw8x_YMiU','_blank')">SCENE 5</div>
+    <div class="video-title" onclick="window.open('https://youtube.com/shorts/TIuVjJxatx4','_blank')">SCENE 5</div>
   </div>
 </section>
 
+<footer>
+  © 2025 Mar Gregorios College | GREGORIA 2.0 Tech Fest. All Rights Reserved.
+</footer>
+
 <script>
 const letters = document.querySelectorAll('#fest-name span');
-const wand = document.getElementById('wand');
 
-// Disney-style wand animation with sparkles
-let i = 0;
-function animateWand() {
-  if(i < letters.length){
-    const rect = letters[i].getBoundingClientRect();
-    wand.style.left = (rect.left + rect.width/2 + window.scrollX) + 'px';
-    wand.style.top = (rect.top + rect.height/2 + window.scrollY) + 'px';
-    wand.style.opacity = 1;
-
-    // create sparkle
-    const sparkle = document.createElement('div');
-    sparkle.className = 'sparkle';
-    sparkle.style.left = wand.style.left;
-    sparkle.style.top = wand.style.top;
-    document.body.appendChild(sparkle);
-    setTimeout(() => document.body.removeChild(sparkle), 600);
-
-    setTimeout(() => { wand.style.opacity = 0; }, 300);
-    i++;
-    setTimeout(animateWand, 100);
-  } else {
-    // Ensure letters stay static
-    letters.forEach(letter => {
-      letter.style.opacity = 1;
-      letter.style.transform = 'translateY(0) rotate(0deg)';
-    });
-    // start RGB clockwise glow
+window.onload = () => {
+  setTimeout(() => {
     document.getElementById('fest-name').classList.add('glow');
-  }
-}
+    letters.forEach(l => {
+      l.style.opacity = 1;
+      l.style.transform = 'translateY(0) rotate(0deg)';
+    });
+  }, letters.length * 200 + 1000);
+};
 
-window.onload = animateWand;
-
-// Cursor magic dust effect for desktop and mobile
 function createDust(x, y) {
   const dust = document.createElement('div');
   dust.className = 'sparkle';
   dust.style.left = x + 'px';
   dust.style.top = y + 'px';
+  const colors = ['white', 'cyan', 'pink'];
+  const c = colors[Math.floor(Math.random()*colors.length)];
+  dust.style.background = c;
+  dust.style.boxShadow = `0 0 10px ${c}, 0 0 20px ${c}`;
   document.body.appendChild(dust);
   setTimeout(() => document.body.removeChild(dust), 600);
 }
 
-// Mouse support
-document.addEventListener('mousemove', e => { createDust(e.pageX, e.pageY); });
-
-// Touch support for mobile
+document.addEventListener('mousemove', e => createDust(e.pageX, e.pageY));
 document.addEventListener('touchmove', e => {
-  for (let touch of e.touches) {
-    createDust(touch.pageX, touch.pageY);
-  }
+  for (let touch of e.touches) createDust(touch.pageX, touch.pageY);
 }, { passive: true });
 </script>
 
 </body>
 </html>
-
-
